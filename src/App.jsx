@@ -33,7 +33,7 @@ const aclsSteps = [
   },
   {
     step: 'Continue CPR and Administer Epinephrine',
-    details: 'Epinephrine 1 mg IV/IO every 3–5 minutes.',
+    details: 'Epinephrine 1 mg IV/IO every 3–5 minutes. No maximum number of doses.',
     options: [
       { text: 'Rhythm changes to shockable', nextStep: 3 },
       { text: 'Rhythm remains non-shockable', nextStep: 7 },
@@ -41,7 +41,7 @@ const aclsSteps = [
   },
   {
     step: 'Administer Amiodarone or Lidocaine for Shockable Rhythm',
-    details: 'Amiodarone 300 mg IV/IO first dose, then 150 mg IV/IO. Alternatively, Lidocaine 1–1.5 mg/kg IV/IO.',
+    details: 'Amiodarone: 300 mg IV/IO first dose, then 150 mg IV/IO (max 450 mg). Lidocaine: 1–1.5 mg/kg IV/IO, then 0.5–0.75 mg/kg IV/IO every 5–10 minutes (max 3 mg/kg).',
     options: [
       { text: 'Rhythm improves', nextStep: null },
       { text: 'Rhythm remains shockable', nextStep: 3 },
@@ -65,7 +65,7 @@ const aclsSteps = [
   },
   {
     step: 'Bradycardia with a Pulse',
-    details: 'Atropine 1 mg IV every 3–5 minutes (max 3 mg). Consider Epinephrine or Dopamine infusion.',
+    details: 'Atropine: 1 mg IV every 3–5 minutes (max 3 mg). Consider Epinephrine or Dopamine infusion.',
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
@@ -73,7 +73,7 @@ const aclsSteps = [
   },
   {
     step: 'Tachycardia with a Pulse',
-    details: 'If narrow complex, administer Adenosine 6 mg rapid IV push. If wide complex, consider Amiodarone 150 mg IV over 10 minutes or Lidocaine.',
+    details: 'Narrow complex: Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg). Wide complex: Amiodarone 150 mg IV over 10 minutes or Lidocaine.',
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
