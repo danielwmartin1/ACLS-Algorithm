@@ -41,7 +41,7 @@ const aclsSteps = [
   },
   {
     step: 'Administer Amiodarone or Lidocaine for Shockable Rhythm',
-    details: 'Amiodarone: 300 mg IV/IO first dose, then 150 mg IV/IO (max 450 mg). Lidocaine: 1–1.5 mg/kg IV/IO, then 0.5–0.75 mg/kg IV/IO every 5–10 minutes (max 3 mg/kg).',
+    details: 'Amiodarone: 300 mg IV/IO first dose, then 150 mg IV/IO (max 450 mg). Lidocaine: 1–1.5 mg/kg IV/IO, then 0.5–0.75 mg/kg IV/IO every 5–10 minutes (max 3 mg/kg). Alternate these medications as necessary.',
     options: [
       { text: 'Rhythm improves', nextStep: null },
       { text: 'Rhythm remains shockable', nextStep: 3 },
@@ -73,7 +73,7 @@ const aclsSteps = [
   },
   {
     step: 'Tachycardia with a Pulse',
-    details: 'Narrow complex: Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg). Wide complex: Amiodarone 150 mg IV over 10 minutes or Lidocaine.',
+    details: 'Narrow complex: Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg). Wide complex: Amiodarone 150 mg IV over 10 minutes or Lidocaine. Alternate medications as required.',
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
@@ -83,14 +83,46 @@ const aclsSteps = [
 
 function App() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [medicationCycle, setMedicationCycle] = useState({
+    epinephrine: 0,
+    amiodarone: 0,
+    lidocaine: 0,
+    atropine: 0,
+    adenosine: 0,
+  });
 
   const handleOptionClick = (nextStep) => {
+    if (nextStep === 5 || nextStep === 4) {
+      updateMedicationCycle(nextStep);
+    }
+
     if (nextStep !== null) {
       setCurrentStep(nextStep);
     } else {
       alert('Algorithm completed!');
       setCurrentStep(0);
+      setMedicationCycle({
+        epinephrine: 0,
+        amiodarone: 0,
+        lidocaine: 0,
+        atropine: 0,
+        adenosine: 0,
+      });
     }
+  };
+
+  const updateMedicationCycle = (step) => {
+    const newCycle = { ...medicationCycle };
+    if (step === 5) {
+      if (newCycle.amiodarone < 2) {
+        newCycle.amiodarone += 1;
+      } else {
+        newCycle.lidocaine += 1;
+      }
+    } else if (step === 4) {
+      newCycle.epinephrine += 1;
+    }
+    setMedicationCycle(newCycle);
   };
 
   return (
@@ -110,6 +142,14 @@ function App() {
               </button>
             ))}
           </div>
+        </div>
+        <div className="medication-tracker">
+          <h3>Medication Cycle</h3>
+          <p>Epinephrine: {medicationCycle.epinephrine}</p>
+          <p>Amiodarone: {medicationCycle.amiodarone}</p>
+          <p>Lidocaine: {medicationCycle.lidocaine}</p>
+          <p>Atropine: {medicationCycle.atropine}</p>
+          <p>Adenosine: {medicationCycle.adenosine}</p>
         </div>
       </header>
     </div>
