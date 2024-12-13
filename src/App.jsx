@@ -24,6 +24,13 @@ const aclsSteps = [
     ],
   },
   {
+    step: 'Administer Epinephrine',
+    options: [
+      { text: 'Epinephrine given', nextStep: 6 },
+      { text: 'Skip Epinephrine', nextStep: 6 },
+    ],
+  },
+  {
     step: 'Monitor and Provide Ventilations',
     options: [
       { text: 'Patient improves', nextStep: null },
@@ -34,7 +41,14 @@ const aclsSteps = [
     step: 'Continue CPR and Reassess',
     options: [
       { text: 'Patient regains pulse', nextStep: null },
-      { text: 'No improvement', nextStep: 5 },
+      { text: 'No improvement', nextStep: 7 },
+    ],
+  },
+  {
+    step: 'Administer Amiodarone',
+    options: [
+      { text: 'Amiodarone given', nextStep: 8 },
+      { text: 'Skip Amiodarone', nextStep: 8 },
     ],
   },
   {
