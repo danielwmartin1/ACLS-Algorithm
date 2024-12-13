@@ -3,59 +3,80 @@ import './App.css'
 
 const aclsSteps = [
   {
-    step: 'Check Responsiveness',
+    step: 'Assess the Patient',
     options: [
       { text: 'Patient is unresponsive', nextStep: 1 },
       { text: 'Patient is responsive', nextStep: null },
     ],
   },
   {
-    step: 'Call for Help & Check Pulse',
+    step: 'Activate Emergency Response & Check Pulse',
     options: [
       { text: 'No pulse', nextStep: 2 },
-      { text: 'Pulse detected', nextStep: 3 },
+      { text: 'Pulse detected but abnormal breathing', nextStep: 6 },
+      { text: 'Pulse detected and normal breathing', nextStep: null },
     ],
   },
   {
-    step: 'Start Chest Compressions and Attach AED',
+    step: 'Start CPR and Attach Defibrillator',
     options: [
-      { text: 'Continue CPR', nextStep: 4 },
-      { text: 'AED advises shock', nextStep: 5 },
+      { text: 'Shockable rhythm (VF/pVT)', nextStep: 3 },
+      { text: 'Non-shockable rhythm (Asystole/PEA)', nextStep: 4 },
     ],
   },
   {
-    step: 'Administer Epinephrine',
+    step: 'Deliver Shock and Continue CPR',
     options: [
-      { text: 'Epinephrine given', nextStep: 6 },
-      { text: 'Skip Epinephrine', nextStep: 6 },
+      { text: 'Rhythm improves', nextStep: null },
+      { text: 'No improvement', nextStep: 5 },
     ],
   },
   {
-    step: 'Monitor and Provide Ventilations',
+    step: 'Continue CPR and Administer Epinephrine',
+    details: 'Epinephrine 1 mg IV/IO every 3–5 minutes.',
+    options: [
+      { text: 'Rhythm changes to shockable', nextStep: 3 },
+      { text: 'Rhythm remains non-shockable', nextStep: 7 },
+    ],
+  },
+  {
+    step: 'Administer Amiodarone or Lidocaine for Shockable Rhythm',
+    details: 'Amiodarone 300 mg IV/IO first dose, then 150 mg IV/IO. Alternatively, Lidocaine 1–1.5 mg/kg IV/IO.',
+    options: [
+      { text: 'Rhythm improves', nextStep: null },
+      { text: 'Rhythm remains shockable', nextStep: 3 },
+    ],
+  },
+  {
+    step: 'Consider Advanced Airway and Reassess',
+    details: 'Consider advanced airway placement and reassess rhythm.',
+    options: [
+      { text: 'Patient regains pulse', nextStep: null },
+      { text: 'No improvement', nextStep: 2 },
+    ],
+  },
+  {
+    step: 'Provide Rescue Breathing',
+    details: 'Provide 1 breath every 6 seconds.',
     options: [
       { text: 'Patient improves', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
     ],
   },
   {
-    step: 'Continue CPR and Reassess',
+    step: 'Bradycardia with a Pulse',
+    details: 'Atropine 1 mg IV every 3–5 minutes (max 3 mg). Consider Epinephrine or Dopamine infusion.',
     options: [
-      { text: 'Patient regains pulse', nextStep: null },
-      { text: 'No improvement', nextStep: 7 },
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
     ],
   },
   {
-    step: 'Administer Amiodarone',
+    step: 'Tachycardia with a Pulse',
+    details: 'If narrow complex, administer Adenosine 6 mg rapid IV push. If wide complex, consider Amiodarone 150 mg IV over 10 minutes or Lidocaine.',
     options: [
-      { text: 'Amiodarone given', nextStep: 8 },
-      { text: 'Skip Amiodarone', nextStep: 8 },
-    ],
-  },
-  {
-    step: 'Deliver Shock',
-    options: [
-      { text: 'Continue CPR after shock', nextStep: 4 },
-      { text: 'Patient regains pulse', nextStep: null },
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
     ],
   },
 ];
@@ -78,6 +99,7 @@ function App() {
         <h1>Interactive ACLS Algorithm</h1>
         <div className="step-container">
           <h2>{aclsSteps[currentStep].step}</h2>
+          {aclsSteps[currentStep].details && <p>{aclsSteps[currentStep].details}</p>}
           <div className="options">
             {aclsSteps[currentStep].options.map((option, index) => (
               <button
@@ -94,4 +116,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
