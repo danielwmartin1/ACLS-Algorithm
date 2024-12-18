@@ -1,5 +1,6 @@
 import React from 'react';
 import './Modal.css';
+import PropTypes from 'prop-types';
 
 function Modal({ message, onClose }) {
   return (
@@ -11,5 +12,10 @@ function Modal({ message, onClose }) {
     </div>
   );
 }
+
+Modal.propTypes = {
+  message: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default Modal;

@@ -1,8 +1,9 @@
-import { useState } from 'react'
-import './App.css'
+import React from 'react';
+import { useState } from 'react';
+import './App.css';
 import Modal from './Modal';
 
-const aclsSteps = [
+export const aclsSteps = [
   {
     step: 'Assess the Patient',
     options: [
