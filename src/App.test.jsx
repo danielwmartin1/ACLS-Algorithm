@@ -76,3 +76,32 @@ describe('App Component', () => {
     expect(nextStep).toBeInTheDocument();
   });
 });
+test('updates medication cycle correctly for Bradycardia with a Pulse', () => {
+  render(<App />);
+  
+  // Navigate to Bradycardia with a Pulse step
+  fireEvent.click(screen.getByText(aclsSteps[0].options[0].text)); // Assess the Patient -> Patient is unresponsive
+  fireEvent.click(screen.getByText(aclsSteps[1].options[0].text)); // Activate Emergency Response & Check Pulse -> No pulse
+  fireEvent.click(screen.getByText(aclsSteps[2].options[2].text)); // Start CPR and Attach Defibrillator -> Bradycardia with a Pulse
+
+  // Check if the Bradycardia with a Pulse step is displayed
+  expect(screen.getByText(aclsSteps[8].step)).toBeInTheDocument();
+
+  // Click on the option to simulate medication administration
+  fireEvent.click(screen.getByText(aclsSteps[8].options[0].text)); // Bradycardia with a Pulse -> Improvement noted
+
+  // Check if the medication cycle is updated correctly
+  expect(screen.getByText(/Atropine: 1/)).toBeInTheDocument();
+
+  // Simulate reaching the maximum dose of Atropine
+  for (let i = 0; i < 2; i++) {
+    fireEvent.click(screen.getByText(aclsSteps[8].options[0].text)); // Bradycardia with a Pulse -> Improvement noted
+  }
+
+  // Check if the maximum dose of Atropine is reached
+  expect(screen.getByText(/Atropine: 3/)).toBeInTheDocument();
+
+  // Check if the modal message is displayed when the maximum dose is reached
+  fireEvent.click(screen.getByText(aclsSteps[8].options[0].text)); // Bradycardia with a Pulse -> Improvement noted
+  expect(screen.getByText(/Maximum dose of Atropine reached!/)).toBeInTheDocument();
+});

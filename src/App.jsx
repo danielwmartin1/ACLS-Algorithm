@@ -115,7 +115,7 @@ function App() {
   const [modalMessage, setModalMessage] = useState(null);
 
   const handleOptionClick = (nextStep) => {
-    if (nextStep === 5 || nextStep === 4) {
+    if (nextStep === 5 || nextStep === 4 || nextStep === 8) {
       updateMedicationCycle(nextStep);
     }
 
@@ -142,14 +142,21 @@ function App() {
       } else if (newCycle.lidocaine < 3) {
         newCycle.lidocaine += 1;
       } else {
-        setModalMessage('Maximum doses of Amiodarone and Lidocaine reached!'); // spell-checker: disable-line
+        setModalMessage('Maximum doses of Amiodarone and Lidocaine reached! Consider other interventions.');
         return;
       }
     } else if (step === 4) {
       if (newCycle.epinephrine < 10) {
         newCycle.epinephrine += 1;
       } else {
-        setModalMessage('Maximum dose of Epinephrine reached!');
+        setModalMessage('Maximum dose of Epinephrine reached! Consider other interventions.');
+        return;
+      }
+    } else if (step === 8) {
+      if (newCycle.atropine < 3) {
+        newCycle.atropine += 1;
+      } else {
+        setModalMessage('Maximum dose of Atropine reached! Consider other interventions.');
         return;
       }
     }
