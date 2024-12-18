@@ -22,6 +22,14 @@ const aclsSteps = [
     options: [
       { text: 'Shockable rhythm (VF/pVT)', nextStep: 3 },
       { text: 'Non-shockable rhythm (Asystole/PEA)', nextStep: 4 },
+      { text: 'Bradycardia with a Pulse', nextStep: 8 },
+      { text: 'Tachycardia with a Pulse', nextStep: 9 },
+      { text: 'SVT (Supraventricular Tachycardia)', nextStep: 10 },
+      { text: 'A-fib (Atrial Fibrillation)', nextStep: 11 },
+      { text: 'VT (Ventricular Tachycardia)', nextStep: 12 },
+      { text: 'VF (Ventricular Fibrillation)', nextStep: 13 },
+      { text: 'Asystole', nextStep: 14 },
+      { text: 'PEA (Pulseless Electrical Activity)', nextStep: 15 },
     ],
   },
   {
