@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import Modal from './Modal';
 
 const aclsSteps = [
   {
@@ -21,7 +22,7 @@ const aclsSteps = [
     step: 'Start CPR and Attach Defibrillator',
     options: [
       { text: 'Shockable rhythm (VF/pVT)', nextStep: 3 },
-      { text: 'Non-shockable rhythm (Asystole/PEA)', nextStep: 4 },
+      { text: 'Non-shockable rhythm (Asystole/PEA)', nextStep: 4 }, // spell-checker: disable-line
       { text: 'Bradycardia with a Pulse', nextStep: 8 },
       { text: 'Tachycardia with a Pulse', nextStep: 9 },
       { text: 'Atrial Fibrillation', nextStep: 10 },
@@ -44,7 +45,7 @@ const aclsSteps = [
     ],
   },
   {
-    step: 'Administer Amiodarone or Lidocaine for Shockable Rhythm',
+    step: 'Administer Amiodarone or Lidocaine for Shockable Rhythm', // spell-checker: disable-line
     details: 'Amiodarone: 300 mg IV/IO first dose, then 150 mg IV/IO (max 450 mg). Lidocaine: 1–1.5 mg/kg IV/IO, then 0.5–0.75 mg/kg IV/IO every 5–10 minutes (max 3 mg/kg). Alternate these medications as necessary.',
     options: [
       { text: 'Rhythm improves', nextStep: null },
@@ -77,7 +78,7 @@ const aclsSteps = [
   },
   {
     step: 'Tachycardia with a Pulse',
-    details: 'Narrow complex: Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg). Wide complex: Amiodarone 150 mg IV over 10 minutes or Lidocaine. Alternate medications as required.',
+    details: 'Narrow complex: Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg). Wide complex: Amiodarone 150 mg IV over 10 minutes or Lidocaine. Alternate medications as required.', // spell-checker: disable-line
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
@@ -85,7 +86,7 @@ const aclsSteps = [
   },
   {
     step: 'Atrial Fibrillation',
-    details: 'Rate control with beta-blockers or calcium channel blockers. Consider anticoagulation.',
+    details: 'Rate control with beta-blockers or calcium channel blockers. Consider anticoagulation.', // spell-checker: disable-line
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
@@ -105,11 +106,12 @@ function App() {
   const [currentStep, setCurrentStep] = useState(0);
   const [medicationCycle, setMedicationCycle] = useState({
     epinephrine: 0,
-    amiodarone: 0,
+    amiodarone: 0, // spell-checker: disable-line
     lidocaine: 0,
     atropine: 0,
     adenosine: 0,
   });
+  const [modalMessage, setModalMessage] = useState(null);
 
   const handleOptionClick = (nextStep) => {
     if (nextStep === 5 || nextStep === 4) {
@@ -119,7 +121,7 @@ function App() {
     if (nextStep !== null) {
       setCurrentStep(nextStep);
     } else {
-      alert('Algorithm completed!');
+      setModalMessage('Algorithm completed!');
       setCurrentStep(0);
       setMedicationCycle({
         epinephrine: 0,
@@ -134,19 +136,19 @@ function App() {
   const updateMedicationCycle = (step) => {
     const newCycle = { ...medicationCycle };
     if (step === 5) {
-      if (newCycle.amiodarone < 2) {
-        newCycle.amiodarone += 1;
+      if (newCycle.amiodarone < 2) { // spell-checker: disable-line
+        newCycle.amiodarone += 1; // spell-checker: disable-line
       } else if (newCycle.lidocaine < 3) {
         newCycle.lidocaine += 1;
       } else {
-        alert('Maximum doses of Amiodarone and Lidocaine reached!');
+        setModalMessage('Maximum doses of Amiodarone and Lidocaine reached!'); // spell-checker: disable-line
         return;
       }
     } else if (step === 4) {
       if (newCycle.epinephrine < 10) {
         newCycle.epinephrine += 1;
       } else {
-        alert('Maximum dose of Epinephrine reached!');
+        setModalMessage('Maximum dose of Epinephrine reached!');
         return;
       }
     }
@@ -174,12 +176,13 @@ function App() {
         <div className="medication-tracker">
           <h3>Medication Cycle</h3>
           <p>Epinephrine: {medicationCycle.epinephrine}</p>
-          <p>Amiodarone: {medicationCycle.amiodarone}</p>
+          <p>Amiodarone: {medicationCycle.amiodarone} {/* spell-checker: disable-line */}</p>
           <p>Lidocaine: {medicationCycle.lidocaine}</p>
           <p>Atropine: {medicationCycle.atropine}</p>
           <p>Adenosine: {medicationCycle.adenosine}</p>
         </div>
       </header>
+      {modalMessage && <Modal message={modalMessage} onClose={() => setModalMessage(null)} />}
     </div>
   );
 }
