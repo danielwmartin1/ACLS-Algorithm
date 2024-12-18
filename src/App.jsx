@@ -24,12 +24,8 @@ const aclsSteps = [
       { text: 'Non-shockable rhythm (Asystole/PEA)', nextStep: 4 },
       { text: 'Bradycardia with a Pulse', nextStep: 8 },
       { text: 'Tachycardia with a Pulse', nextStep: 9 },
-      { text: 'SVT (Supraventricular Tachycardia)', nextStep: 10 },
-      { text: 'A-fib (Atrial Fibrillation)', nextStep: 11 },
-      { text: 'VT (Ventricular Tachycardia)', nextStep: 12 },
-      { text: 'VF (Ventricular Fibrillation)', nextStep: 13 },
-      { text: 'Asystole', nextStep: 14 },
-      { text: 'PEA (Pulseless Electrical Activity)', nextStep: 15 },
+      { text: 'Atrial Fibrillation', nextStep: 10 },
+      { text: 'Atrial Flutter', nextStep: 11 },
     ],
   },
   {
@@ -88,48 +84,16 @@ const aclsSteps = [
     ],
   },
   {
-    step: 'SVT (Supraventricular Tachycardia)',
-    details: 'Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg).',
+    step: 'Atrial Fibrillation',
+    details: 'Rate control with beta-blockers or calcium channel blockers. Consider anticoagulation.',
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
     ],
   },
   {
-    step: 'A-fib (Atrial Fibrillation)',
-    details: 'Rate control with beta-blockers or calcium channel blockers.',
-    options: [
-      { text: 'Improvement noted', nextStep: null },
-      { text: 'Condition worsens', nextStep: 2 },
-    ],
-  },
-  {
-    step: 'VT (Ventricular Tachycardia)',
-    details: 'Amiodarone 150 mg IV over 10 minutes or Lidocaine.',
-    options: [
-      { text: 'Improvement noted', nextStep: null },
-      { text: 'Condition worsens', nextStep: 2 },
-    ],
-  },
-  {
-    step: 'VF (Ventricular Fibrillation)',
-    details: 'Defibrillation and CPR.',
-    options: [
-      { text: 'Improvement noted', nextStep: null },
-      { text: 'Condition worsens', nextStep: 2 },
-    ],
-  },
-  {
-    step: 'Asystole',
-    details: 'CPR and Epinephrine 1 mg IV/IO every 3–5 minutes.',
-    options: [
-      { text: 'Improvement noted', nextStep: null },
-      { text: 'Condition worsens', nextStep: 2 },
-    ],
-  },
-  {
-    step: 'PEA (Pulseless Electrical Activity)',
-    details: 'CPR and Epinephrine 1 mg IV/IO every 3–5 minutes.',
+    step: 'Atrial Flutter',
+    details: 'Rate control with beta-blockers or calcium channel blockers. Consider anticoagulation.',
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
