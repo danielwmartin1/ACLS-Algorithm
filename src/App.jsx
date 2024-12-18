@@ -79,6 +79,54 @@ const aclsSteps = [
       { text: 'Condition worsens', nextStep: 2 },
     ],
   },
+  {
+    step: 'SVT (Supraventricular Tachycardia)',
+    details: 'Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg).',
+    options: [
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
+    ],
+  },
+  {
+    step: 'A-fib (Atrial Fibrillation)',
+    details: 'Rate control with beta-blockers or calcium channel blockers.',
+    options: [
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
+    ],
+  },
+  {
+    step: 'VT (Ventricular Tachycardia)',
+    details: 'Amiodarone 150 mg IV over 10 minutes or Lidocaine.',
+    options: [
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
+    ],
+  },
+  {
+    step: 'VF (Ventricular Fibrillation)',
+    details: 'Defibrillation and CPR.',
+    options: [
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
+    ],
+  },
+  {
+    step: 'Asystole',
+    details: 'CPR and Epinephrine 1 mg IV/IO every 3–5 minutes.',
+    options: [
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
+    ],
+  },
+  {
+    step: 'PEA (Pulseless Electrical Activity)',
+    details: 'CPR and Epinephrine 1 mg IV/IO every 3–5 minutes.',
+    options: [
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
+    ],
+  },
 ];
 
 function App() {
@@ -116,11 +164,19 @@ function App() {
     if (step === 5) {
       if (newCycle.amiodarone < 2) {
         newCycle.amiodarone += 1;
-      } else {
+      } else if (newCycle.lidocaine < 3) {
         newCycle.lidocaine += 1;
+      } else {
+        alert('Maximum doses of Amiodarone and Lidocaine reached!');
+        return;
       }
     } else if (step === 4) {
-      newCycle.epinephrine += 1;
+      if (newCycle.epinephrine < 10) {
+        newCycle.epinephrine += 1;
+      } else {
+        alert('Maximum dose of Epinephrine reached!');
+        return;
+      }
     }
     setMedicationCycle(newCycle);
   };
