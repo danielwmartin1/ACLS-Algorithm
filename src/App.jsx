@@ -127,6 +127,7 @@ function App() {
   const [showCountdown, setShowCountdown] = useState(false);
   const [countdown, setCountdown] = useState(3);
   const [medicationMessage, setMedicationMessage] = useState(null);
+  const [showRhythmCheck, setShowRhythmCheck] = useState(false);
 
   const handleOptionClick = (nextStep) => {
     if (nextStep === 5 || nextStep === 4 || nextStep === 8 || nextStep === 9 || nextStep === 10 || nextStep === 3 || nextStep === 11 || nextStep === 12) {
@@ -157,8 +158,12 @@ function App() {
     setPendingAction(null);
     setTimeout(() => {
       setMedicationMessage(null);
-      proceedToNextStep(2); // Reset to picking the rhythm
-    }, 2000); // Show the message for 2 seconds
+      setShowRhythmCheck(true);
+      setTimeout(() => {
+        setShowRhythmCheck(false);
+        proceedToNextStep(2); // Reset to picking the rhythm
+      }, 2000); // Show the rhythm check message for 2 seconds
+    }, 2000); // Show the medication message for 2 seconds
   };
 
   const handleDeliverShock = (step) => {
@@ -260,6 +265,11 @@ function App() {
         {medicationMessage && (
           <div className="countdown-popup">
             <h2>{medicationMessage}</h2>
+          </div>
+        )}
+        {showRhythmCheck && (
+          <div className="countdown-popup">
+            <h2>Check rhythm</h2>
           </div>
         )}
         <div className="medication-tracker">
