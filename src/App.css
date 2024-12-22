@@ -103,6 +103,7 @@ footer.footer {
   font-size: 2em;
   margin-bottom: 1.25rem;
   text-align: center;
+  text-decoration: underline;
 }
 
 .aclsStep {
