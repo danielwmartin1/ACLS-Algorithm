@@ -234,9 +234,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Interactive ACLS Algorithm</h1>
+        <h1 className='aclsHeader'>Interactive ACLS Algorithm</h1>
         <div className="step-container">
-          <h2>{aclsSteps[currentStep].step}</h2>
+          <h2 className="aclsStep">{aclsSteps[currentStep].step}</h2>
           {aclsSteps[currentStep].details && <p>{aclsSteps[currentStep].details}</p>}
           <div className="options">
             {aclsSteps[currentStep].options.map((option, index) => (
