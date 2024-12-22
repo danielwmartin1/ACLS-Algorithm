@@ -45,3 +45,19 @@ button:hover {
 .medication-tracker {
   margin-top: 20px;
 }
+
+.countdown-popup {
+  width: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1.5px solid #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  font-size: 1.5em; /* Reduced font size by 25% */
+  z-index: 1000;
+}

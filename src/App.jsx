@@ -23,11 +23,12 @@ export const aclsSteps = [
     step: 'Start CPR and Attach Defibrillator',
     options: [
       { text: 'Shockable rhythm (VF/pVT)', nextStep: 3 },
-      { text: 'Non-shockable rhythm (Asystole/PEA)', nextStep: 4 }, // spell-checker: disable-line
+      { text: 'Non-shockable rhythm (Asystole/PEA)', nextStep: 4 },
       { text: 'Bradycardia with a Pulse', nextStep: 8 },
-      { text: 'Tachycardia with a Pulse', nextStep: 9 },
-      { text: 'Atrial Fibrillation', nextStep: 10 },
-      { text: 'Atrial Flutter', nextStep: 11 },
+      { text: 'Narrow-Complex Tachycardia', nextStep: 9 },
+      { text: 'Wide-Complex Tachycardia', nextStep: 10 },
+      { text: 'Atrial Fibrillation', nextStep: 11 },
+      { text: 'Atrial Flutter', nextStep: 12 },
     ],
   },
   {
@@ -46,7 +47,7 @@ export const aclsSteps = [
     ],
   },
   {
-    step: 'Administer Amiodarone or Lidocaine for Shockable Rhythm', // spell-checker: disable-line
+    step: 'Administer Amiodarone or Lidocaine for Shockable Rhythm',
     details: 'Amiodarone: 300 mg IV/IO first dose, then 150 mg IV/IO (max 450 mg). Lidocaine: 1–1.5 mg/kg IV/IO, then 0.5–0.75 mg/kg IV/IO every 5–10 minutes (max 3 mg/kg). Alternate these medications as necessary.',
     options: [
       { text: 'Rhythm improves', nextStep: null },
@@ -78,8 +79,16 @@ export const aclsSteps = [
     ],
   },
   {
-    step: 'Tachycardia with a Pulse',
-    details: 'Narrow complex: Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg). Wide complex: Amiodarone 150 mg IV over 10 minutes or Lidocaine. Alternate medications as required.', // spell-checker: disable-line
+    step: 'Narrow-Complex Tachycardia',
+    details: 'Adenosine 6 mg IV push, then 12 mg if needed (max 18 mg).',
+    options: [
+      { text: 'Improvement noted', nextStep: null },
+      { text: 'Condition worsens', nextStep: 2 },
+    ],
+  },
+  {
+    step: 'Wide-Complex Tachycardia',
+    details: 'Amiodarone 150 mg IV over 10 minutes or Lidocaine. Alternate medications as required.',
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
@@ -87,7 +96,7 @@ export const aclsSteps = [
   },
   {
     step: 'Atrial Fibrillation',
-    details: 'Rate control with beta-blockers or calcium channel blockers. Consider anticoagulation.', // spell-checker: disable-line
+    details: 'Rate control with beta-blockers or calcium channel blockers. Consider anticoagulation.',
     options: [
       { text: 'Improvement noted', nextStep: null },
       { text: 'Condition worsens', nextStep: 2 },
@@ -107,58 +116,112 @@ function App() {
   const [currentStep, setCurrentStep] = useState(0);
   const [medicationCycle, setMedicationCycle] = useState({
     epinephrine: 0,
-    amiodarone: 0, // spell-checker: disable-line
+    amiodarone: 0,
     lidocaine: 0,
     atropine: 0,
     adenosine: 0,
+    rateControl: 0, // Combined cycle for beta-blockers and calcium-channel blockers
   });
   const [modalMessage, setModalMessage] = useState(null);
+  const [pendingAction, setPendingAction] = useState(null);
+  const [showCountdown, setShowCountdown] = useState(false);
+  const [countdown, setCountdown] = useState(3);
+  const [medicationMessage, setMedicationMessage] = useState(null);
 
   const handleOptionClick = (nextStep) => {
-    if (nextStep === 5 || nextStep === 4 || nextStep === 8) {
-      updateMedicationCycle(nextStep);
+    if (nextStep === 5 || nextStep === 4 || nextStep === 8 || nextStep === 9 || nextStep === 10 || nextStep === 3 || nextStep === 11 || nextStep === 12) {
+      setPendingAction(nextStep);
+    } else {
+      proceedToNextStep(nextStep);
     }
+  };
 
+  const proceedToNextStep = (nextStep) => {
     if (nextStep !== null) {
       setCurrentStep(nextStep);
     } else {
-      setModalMessage('Algorithm completed!');
-      setCurrentStep(0);
-      setMedicationCycle({
-        epinephrine: 0,
-        amiodarone: 0,
-        lidocaine: 0,
-        atropine: 0,
-        adenosine: 0,
-      });
+      setModalMessage('End of Algorithm');
     }
+  };
+
+  const handleAdministerMedication = (step) => {
+    const medicationDetails = aclsSteps[step]?.details || 'Medication given';
+    let medicationName;
+    if (step === 11 || step === 12) {
+      medicationName = 'Beta-blockers or Calcium-channel blockers';
+    } else {
+      medicationName = medicationDetails.split(':')[0].split(' ')[0]; // Extract the medication name from the details
+    }
+    setMedicationMessage(`${medicationName} given`);
+    updateMedicationCycle(step);
+    setPendingAction(null);
+    setTimeout(() => {
+      setMedicationMessage(null);
+      proceedToNextStep(2); // Reset to picking the rhythm
+    }, 2000); // Show the message for 2 seconds
+  };
+
+  const handleDeliverShock = (step) => {
+    setShowCountdown(true);
+    let countdownValue = 3;
+    const countdownInterval = setInterval(() => {
+      setCountdown(countdownValue);
+      countdownValue -= 1;
+      if (countdownValue < 0) {
+        clearInterval(countdownInterval);
+        setTimeout(() => {
+          setShowCountdown(false);
+          setPendingAction(null);
+          setCountdown(3); // Reset countdown state
+          proceedToNextStep(2); // Reset to picking the rhythm
+        }, 2000); // Additional 2 seconds to make the total duration 5 seconds
+      }
+    }, 1000);
   };
 
   const updateMedicationCycle = (step) => {
     const newCycle = { ...medicationCycle };
-    if (step === 5) {
-      if (newCycle.amiodarone < 2) { // spell-checker: disable-line
-        newCycle.amiodarone += 1; // spell-checker: disable-line
-      } else if (newCycle.lidocaine < 3) {
-        newCycle.lidocaine += 1;
-      } else {
-        setModalMessage('Maximum doses of Amiodarone and Lidocaine reached! Consider other interventions.');
-        return;
-      }
-    } else if (step === 4) {
-      if (newCycle.epinephrine < 10) {
-        newCycle.epinephrine += 1;
-      } else {
-        setModalMessage('Maximum dose of Epinephrine reached! Consider other interventions.');
-        return;
-      }
-    } else if (step === 8) {
-      if (newCycle.atropine < 3) {
-        newCycle.atropine += 1;
-      } else {
-        setModalMessage('Maximum dose of Atropine reached! Consider other interventions.');
-        return;
-      }
+    switch (step) {
+      case 4:
+        if (newCycle.epinephrine < 10) {
+          newCycle.epinephrine += 1;
+        } else {
+          setModalMessage('Maximum Epinephrine dosage reached');
+        }
+        break;
+      case 5:
+        if (newCycle.amiodarone < 2) {
+          newCycle.amiodarone += 1;
+        } else if (newCycle.lidocaine < 3) {
+          newCycle.lidocaine += 1;
+        } else {
+          setModalMessage('Maximum Amiodarone/Lidocaine dosage reached');
+        }
+        break;
+      case 8:
+        if (newCycle.atropine < 3) {
+          newCycle.atropine += 1;
+        } else {
+          setModalMessage('Maximum Atropine dosage reached');
+        }
+        break;
+      case 9:
+        if (newCycle.adenosine < 3) {
+          newCycle.adenosine += 1;
+        } else {
+          setModalMessage('Maximum Adenosine dosage reached');
+        }
+        break;
+      case 11:
+      case 12:
+        if (newCycle.rateControl < 3) {
+          newCycle.rateControl += 1;
+        } else {
+          setModalMessage('Maximum Beta-blockers/Calcium-channel blockers dosage reached');
+        }
+        break;
+      default:
+        break;
     }
     setMedicationCycle(newCycle);
   };
@@ -181,13 +244,32 @@ function App() {
             ))}
           </div>
         </div>
+        {pendingAction && (
+          <div className="action-buttons">
+            <button onClick={() => handleAdministerMedication(pendingAction)}>Administer Medication</button>
+            {(pendingAction === 3 || pendingAction === 5) && (
+              <button onClick={() => handleDeliverShock(pendingAction)}>Deliver Shock</button>
+            )}
+          </div>
+        )}
+        {showCountdown && (
+          <div className="countdown-popup">
+            <h2>{countdown > 0 ? countdown : 'Clear!'}</h2>
+          </div>
+        )}
+        {medicationMessage && (
+          <div className="countdown-popup">
+            <h2>{medicationMessage}</h2>
+          </div>
+        )}
         <div className="medication-tracker">
           <h3>Medication Cycle</h3>
           <p>Epinephrine: {medicationCycle.epinephrine}</p>
-          <p>Amiodarone: {medicationCycle.amiodarone} {/* spell-checker: disable-line */}</p>
+          <p>Amiodarone: {medicationCycle.amiodarone}</p>
           <p>Lidocaine: {medicationCycle.lidocaine}</p>
           <p>Atropine: {medicationCycle.atropine}</p>
           <p>Adenosine: {medicationCycle.adenosine}</p>
+          <p>Rate Control (Beta-blockers/Calcium-channel blockers): {medicationCycle.rateControl}</p>
         </div>
       </header>
       {modalMessage && <Modal message={modalMessage} onClose={() => setModalMessage(null)} />}
