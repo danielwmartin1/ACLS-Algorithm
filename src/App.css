@@ -36,7 +36,7 @@ body {
 
 .header {
   font-size: 2em;
-  margin-bottom: 1.25rem;
+  margin: 0.5rem !important;
   text-align: center;
 }
 
@@ -92,10 +92,10 @@ footer.footer {
   border-top: 0.3rem ridge var(--primary-color);
   bottom: 0;
   color: var(--text-color);
-  padding: 1rem;
+  padding: 0.5rem;
   position: relative; 
   text-align: center;
-  width: 100vw !important;
+  width: 100vw !important;  
   font-size: 1rem;
 }
 
