@@ -282,7 +282,8 @@ function App() {
           <p>Atropine: {medicationCycle.atropine}</p>
           <p>Adenosine: {medicationCycle.adenosine}</p>
           <p>Rate Control (Beta-blockers/Calcium-channel blockers): {medicationCycle.rateControl}</p>
-          <p>Shock Cycle: {shockCycle}</p>
+          <h3>Shock Cycle</h3>
+          <p>{shockCycle}</p>
         </div>
       </main>
       {modalMessage && <Modal message={modalMessage} onClose={() => setModalMessage(null)} />}
