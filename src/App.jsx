@@ -128,6 +128,7 @@ function App() {
   const [countdown, setCountdown] = useState(3);
   const [medicationMessage, setMedicationMessage] = useState(null);
   const [showRhythmCheck, setShowRhythmCheck] = useState(false);
+  const [shockCycle, setShockCycle] = useState(0);
 
   const handleOptionClick = (nextStep) => {
     if (nextStep === 5 || nextStep === 4 || nextStep === 8 || nextStep === 9 || nextStep === 10 || nextStep === 3 || nextStep === 11 || nextStep === 12) {
@@ -178,6 +179,7 @@ function App() {
           setShowCountdown(false);
           setPendingAction(null);
           setCountdown(3); // Reset countdown state
+          setShockCycle(shockCycle + 1); // Increment shock cycle
           proceedToNextStep(2); // Reset to picking the rhythm
         }, 2000); // Additional 2 seconds to make the total duration 5 seconds
       }
@@ -233,7 +235,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <main className="App-header">
         <h1 className='aclsHeader'>Interactive ACLS Algorithm</h1>
         <div className="step-container">
           <h2 className="aclsStep">{aclsSteps[currentStep].step}</h2>
@@ -280,8 +282,9 @@ function App() {
           <p>Atropine: {medicationCycle.atropine}</p>
           <p>Adenosine: {medicationCycle.adenosine}</p>
           <p>Rate Control (Beta-blockers/Calcium-channel blockers): {medicationCycle.rateControl}</p>
+          <p>Shock Cycle: {shockCycle}</p>
         </div>
-      </header>
+      </main>
       {modalMessage && <Modal message={modalMessage} onClose={() => setModalMessage(null)} />}
     </div>
   );

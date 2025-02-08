@@ -28,6 +28,7 @@ body {
   margin: 0 auto; /* Center horizontally */
   width: 90%; /* Adjust width for responsiveness */
   max-width: 1200px; /* Max width to prevent it from getting too wide */
+  margin-top: 10px !important; /* Force the top margin */
 }
 
 .step-container {
