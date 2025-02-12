@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import './App.css';
+import './buttons.css'
 import './index.css';
 import Modal from './Modal';
 import { aclsSteps } from './constants';
@@ -164,9 +165,9 @@ function App() {
         </div>
         {pendingAction && (
           <div className="action-buttons">
-            <button onClick={() => handleAdministerMedication(pendingAction)}>Administer Medication</button>
+            <button onClick={() => handleAdministerMedication(pendingAction)} className="administer-medication">Administer Medication</button>
             {(pendingAction === 3 || pendingAction === 5) && (
-              <button onClick={() => handleDeliverShock(pendingAction)}>Deliver Shock</button>
+              <button onClick={() => handleDeliverShock(pendingAction)} className="deliver-shock">Deliver Shock</button>
             )}
           </div>
         )}
