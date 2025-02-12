@@ -8,27 +8,29 @@ body {
   align-items: center;
   background-color: black;
   font-size: 1rem; /* Base font size */
+  width: 100vw;
 }
 
 .App {
   text-align: center;
-  height: 100vh;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 0 1.5rem 0;
 }
 
 .App-header {
   background-color: #212e48;
-  padding: 1.25rem;
   color: white;
   border-radius: 1rem;
-  border: 0.2rem solid #0056b3;
-  margin: 0 auto; /* Center horizontally */
-  width: 90%; /* Adjust width for responsiveness */
-  max-width: 1200px; /* Max width to prevent it from getting too wide */
-  margin-top: 10px !important; /* Force the top margin */
+  border: 3px ridge aqua;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .step-container {
@@ -68,6 +70,34 @@ button:hover {
   background-color: #0056b3;
 }
 
+button.unresponsive {
+  background-color: red;
+}
+
+button.responsive {
+  background-color: green;
+}
+
+button.no-pulse {
+  background-color: red;
+}
+
+button.abnormal-breathing {
+  background-color: blue;
+}
+
+button.normal-breathing {
+  background-color: green;
+}
+
+button.regains-pulse {
+  background-color: green;
+}
+
+button.no-improvement {
+  background-color: red;
+}
+
 .medication-tracker {
   margin-top: 1.25rem;
 }
@@ -100,24 +130,16 @@ footer.footer {
   font-size: 1rem;
 }
 
-.aclsHeader {
+h1.header {
   font-size: 2em;
-  margin-bottom: 1.25rem;
-  text-align: center;
-  text-decoration: underline;
+  line-height: 1.1;
 }
 
-.aclsStep {
-  font-size: calc(2em * 0.8); /* 20% smaller than aclsHeader */
-  margin-bottom: 1rem;
-  text-align: center;
-}
+
+
 
 @media (max-width: 1200px) {
-  .App-header {
-    width: 85%; /* Adjust width for smaller screens */
-    margin: 2%; /* Adjust margin for smaller screens */
-  }
+
   .topHeader {
     font-size: 2em; /* Increased by 30% */
   }
@@ -128,10 +150,7 @@ footer.footer {
 }
 
 @media (max-width: 992px) {
-  .App-header {
-    width: 80%; /* Adjust width for smaller screens */
-    margin: 3%; /* Adjust margin for smaller screens */
-  }
+
   .header {
     font-size: 2em;
   }
@@ -145,10 +164,7 @@ footer.footer {
 }
 
 @media (max-width: 768px) {
-  .App-header {
-    width: 75%; /* Adjust width for smaller screens */
-    margin: 4%; /* Adjust margin for smaller screens */
-  }
+
   .header {
     font-size: 1.75em;
   }
@@ -162,16 +178,11 @@ footer.footer {
   .aclsHeader {
     font-size: 1.5em;
   }
-  .aclsStep {
-    font-size: calc(1.5em * 0.8); /* 20% smaller than aclsHeader */
-  }
+
 }
 
 @media (max-width: 576px) {
-  .App-header {
-    width: 70%; /* Adjust width for smaller screens */
-    margin: 5%; /* Adjust margin for smaller screens */
-  }
+
   .header {
     font-size: 1.5em;
   }
@@ -185,16 +196,10 @@ footer.footer {
   .aclsHeader {
     font-size: 1.25em;
   }
-  .aclsStep {
-    font-size: calc(1.25em * 0.8); /* 20% smaller than aclsHeader */
-  }
 }
 
 @media (max-width: 480px) {
-  .App-header {
-    width: 65%; /* Adjust width for smaller screens */
-    margin: 6%; /* Adjust margin for smaller screens */
-  }
+
   .header {
     font-size: 1.25em;
   }
@@ -209,6 +214,6 @@ footer.footer {
     font-size: 1.1em;
   }
   .aclsStep {
-    font-size: calc(1.1em * 0.8); /* 20% smaller than aclsHeader */
+    font-size: calc(1.5em * 0.8); /* 20% smaller than aclsHeader */
   }
 }
