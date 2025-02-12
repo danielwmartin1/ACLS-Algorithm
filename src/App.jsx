@@ -167,7 +167,7 @@ function App() {
     }, 2000); // Show the medication message for 2 seconds
   };
 
-  const handleDeliverShock = (step) => {
+  const handleDeliverShock = (_step) => {
     setShowCountdown(true);
     let countdownValue = 3;
     const countdownInterval = setInterval(() => {
@@ -275,15 +275,15 @@ function App() {
           </div>
         )}
         <div className="medication-tracker">
-          <h3>Medication Cycle</h3>
+          <h3 className="medCycle">Medication Cycle</h3>
           <p>Epinephrine: {medicationCycle.epinephrine}</p>
           <p>Amiodarone: {medicationCycle.amiodarone}</p>
           <p>Lidocaine: {medicationCycle.lidocaine}</p>
           <p>Atropine: {medicationCycle.atropine}</p>
           <p>Adenosine: {medicationCycle.adenosine}</p>
           <p>Rate Control (Beta-blockers/Calcium-channel blockers): {medicationCycle.rateControl}</p>
-          <h3>Shock Cycle</h3>
-          <p>{shockCycle}</p>
+          <h3 className="shockCycle">Shock Cycle</h3>
+          <p className="shockCycleAmount">{shockCycle}</p>
         </div>
       </main>
       {modalMessage && <Modal message={modalMessage} onClose={() => setModalMessage(null)} />}
