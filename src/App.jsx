@@ -62,7 +62,7 @@ function App() {
     }, 2000); // Show the medication message for 2 seconds
   };
 
-  const handleDeliverShock = (_step) => {
+  const handleDeliverShock = () => {
     setShowCountdown(true);
     let countdownValue = 3;
     const countdownInterval = setInterval(() => {
@@ -146,7 +146,15 @@ function App() {
                   option.text.includes('Pulse detected but abnormal breathing') ? 'abnormal-breathing' :
                   option.text.includes('Pulse detected and normal breathing') ? 'normal-breathing' :
                   option.text.includes('Patient regains pulse') ? 'regains-pulse' :
-                  option.text.includes('No improvement') ? 'no-improvement' : ''
+                  option.text.includes('No improvement') ? 'no-improvement' :
+                  option.text.includes('Shockable rhythm (VF/pVT)') ? 'shockable-rhythm' :
+                  option.text.includes('Non-shockable rhythm (Asystole/PEA)') ? 'non-shockable-rhythm' :
+                  option.text.includes('Narrow-Complex Tachycardia') ? 'narrow-complex-tachycardia' :
+                  option.text.includes('Wide-Complex Tachycardia') ? 'wide-complex-tachycardia' :
+                  option.text.includes('Atrial Fibrillation') ? 'atrial-fibrillation' :
+                  option.text.includes('Atrial Flutter') ? 'atrial-flutter' :
+                  option.text.includes('Bradycardia with a Pulse') ? 'bradycardia' :
+                  option.text.includes('Normal Sinus Rhythm') ? 'normal-sinus-rhythm' : ''
                 }
               >
                 {option.text}
