@@ -43,12 +43,27 @@ function App() {
   };
 
   const handleAdministerMedication = (step) => {
-    const medicationDetails = aclsSteps[step]?.details || 'Medication given';
     let medicationName;
-    if (step === 11 || step === 12) {
-      medicationName = 'Beta-blockers or Calcium-channel blockers';
-    } else {
-      medicationName = medicationDetails.split(':')[0].split(' ')[0]; // Extract the medication name from the details
+    switch (step) {
+      case 4:
+        medicationName = 'Epinephrine';
+        break;
+      case 5:
+        medicationName = 'Amiodarone';
+        break;
+      case 8:
+        medicationName = 'Atropine';
+        break;
+      case 9:
+        medicationName = 'Adenosine';
+        break;
+      case 11:
+      case 12:
+        medicationName = 'Beta-blockers or Calcium-channel blockers';
+        break;
+      default:
+        medicationName = 'Medication';
+        break;
     }
     setMedicationMessage(`${medicationName} given`);
     updateMedicationCycle(step);
@@ -165,7 +180,9 @@ function App() {
         </div>
         {pendingAction && (
           <div className="action-buttons">
-            <button onClick={() => handleAdministerMedication(pendingAction)} className="administer-medication">Administer Medication</button>
+            {pendingAction !== 3 && pendingAction !== 5 && (
+              <button onClick={() => handleAdministerMedication(pendingAction)} className="administer-medication">Administer Medication</button>
+            )}
             {(pendingAction === 3 || pendingAction === 5) && (
               <button onClick={() => handleDeliverShock(pendingAction)} className="deliver-shock">Deliver Shock</button>
             )}
