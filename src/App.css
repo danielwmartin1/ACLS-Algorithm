@@ -7,7 +7,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: black;
-  font-size: 1rem; /* Base font size */
+  font-size: 1rem; 
   width: 100vw;
 }
 
@@ -44,7 +44,7 @@ body {
 }
 
 .topHeader {
-  font-size: 2.6em; /* Increased by 30% */
+  font-size: 2.6em; 
   margin-bottom: 1.25rem;
   text-align: center;
   background-color: #212e48;
@@ -55,8 +55,6 @@ body {
   align-items: center;
   border-bottom: 0.3rem ridge var(--primary-color);
 }
-
-
 
 .medication-tracker {
   margin-top: 1.25rem;
@@ -74,17 +72,17 @@ body {
   border-radius: 0.6rem;
   text-align: center;
   color: white;
-  font-size: 1.5em; /* Reduced font size by 25% */
+  font-size: 1.5em; 
   z-index: 1000;
 }
 
 footer.footer {
   background-color: var(--background-color);
   border-top: 0.3rem ridge var(--primary-color);
-  bottom: 0;
+  bottom: 0 !important;
   color: var(--text-color);
   padding: 0.5rem;
-  position: relative; 
+  position: relative !important; 
   text-align: center;
   width: 100vw !important;  
   font-size: 1rem;
@@ -95,12 +93,9 @@ h1.header {
   line-height: 1.1;
 }
 
-
-
 @media (max-width: 1200px) {
-
   .topHeader {
-    font-size: 2em; /* Increased by 30% */
+    font-size: 2em;
   }
   footer.footer {
     font-size: 0.9rem;
@@ -109,12 +104,11 @@ h1.header {
 }
 
 @media (max-width: 992px) {
-
   .header {
     font-size: 2em;
   }
   .topHeader {
-    font-size: 1.95em; /* Increased by 30% */
+    font-size: 1.95em; 
   }
   footer.footer {
     font-size: 0.8rem;
@@ -123,12 +117,11 @@ h1.header {
 }
 
 @media (max-width: 768px) {
-
   .header {
     font-size: 1.75em;
   }
   .topHeader {
-    font-size: 1.625em; /* Increased by 30% */
+    font-size: 1.625em; 
   }
   footer.footer {
     font-size: 0.7rem;
@@ -137,16 +130,14 @@ h1.header {
   .aclsHeader {
     font-size: 1.5em;
   }
-
 }
 
 @media (max-width: 576px) {
-
   .header {
     font-size: 1.5em;
   }
   .topHeader {
-    font-size: 1.3em; /* Increased by 30% */
+    font-size: 1.3em; 
   }
   footer.footer {
     font-size: 0.6rem;
@@ -158,12 +149,11 @@ h1.header {
 }
 
 @media (max-width: 480px) {
-
   .header {
     font-size: 1.25em;
   }
   .topHeader {
-    font-size: 1.1375em; /* Increased by 30% */
+    font-size: 1.1375em;
   }
   footer.footer {
     font-size: 0.5rem;
@@ -173,6 +163,6 @@ h1.header {
     font-size: 1.1em;
   }
   .aclsStep {
-    font-size: calc(1.8em * 0.8); /* 20% smaller than aclsHeader */
+    font-size: calc(1.8em * 0.8); 
   }
 }
